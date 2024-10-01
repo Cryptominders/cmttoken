@@ -1,232 +1,253 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Token CMT - Comunidad CryptoMinders</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+<html><head><base href="https://www.cryptominders-cmt.com/">
+<title>Token CMT - Comunidad CryptoMinders</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-    body {
-      background-color: #333;
-      color: #0af;
-      font-family: 'VT323', monospace;
-      margin: 0;
-      padding: 20px;
-      overflow-x: hidden;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      scroll-behavior: smooth;
-    }
+  :root {
+    --primary-color: #0af;
+    --bg-color: #000;
+    --text-color: #0af;
+  }
 
+  body {
+    background-color: #333;
+    color: var(--text-color);
+    font-family: 'VT323', monospace;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .monitor {
+    background-color: var(--bg-color);
+    border-radius: 20px;
+    box-shadow: 
+      inset 0 0 20px rgba(10,175,255,0.5),
+      0 0 0 20px #222,
+      0 0 0 25px #111;
+    overflow: hidden;
+    position: relative;
+    width: 95vw;
+    max-width: 1200px;
+    height: 95vh;
+    max-height: 800px;
+    padding: 20px;
+  }
+  .monitor::before, .monitor::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, #000, var(--primary-color), #000);
+    opacity: 0.3;
+    z-index: 10;
+  }
+  .monitor::before { top: 0; }
+  .monitor::after { bottom: 0; }
+  .screen {
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 20px;
+  }
+  .screen::-webkit-scrollbar {
+    width: 10px;
+  }
+  .screen::-webkit-scrollbar-track {
+    background: #111;
+  }
+  .screen::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+  }
+  .screen::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  header {
+    background-color: #111;
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 2px solid var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    background-color: #222;
+    padding: 10px 0;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--primary-color);
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border: 1px solid var(--primary-color);
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+  nav a:hover, nav a:focus {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--primary-color);
+  }
+  section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: rgba(10,175,255,0.1);
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(10,175,255,0.3);
+  }
+  h1, h2 {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .glitch {
+    position: relative;
+    animation: glitch 2s infinite;
+  }
+  @keyframes glitch {
+    0% { transform: translate(0) }
+    20% { transform: translate(-2px, 2px) }
+    40% { transform: translate(-2px, -2px) }
+    60% { transform: translate(2px, 2px) }
+    80% { transform: translate(2px, -2px) }
+    100% { transform: translate(0) }
+  }
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+  }
+  .button:hover, .button:focus {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 20px var(--primary-color);
+  }
+  footer {
+    background-color: #111;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 2px solid var(--primary-color);
+  }
+  .social-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+  }
+  .social-links a:hover, .social-links a:focus {
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary-color);
+  }
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 24px;
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
     .monitor {
-      background-color: #000;
-      border-radius: 20px;
-      box-shadow: 
-        inset 0 0 20px rgba(10,175,255,0.5),
-        0 0 0 20px #222,
-        0 0 0 25px #111;
-      overflow: hidden;
-      position: relative;
-      width: 95vw;
-      max-width: 1200px;
-      height: 95vh;
-      max-height: 800px;
-      padding: 20px;
-    }
-
-    .screen {
-      height: 100%;
-      overflow-y: auto;
-      padding-right: 20px;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    header {
-      background-color: #111;
-      padding: 20px 0;
-      text-align: center;
-      border-bottom: 2px solid #0af;
-      box-shadow: 0 0 10px #0af;
-    }
-
-    /* Estilos del menú */
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #222;
-      padding: 10px 0;
-    }
-
-    nav a {
-      color: #0af;
-      text-decoration: none;
-      padding: 10px 20px;
-      margin: 5px;
-      border: 1px solid #0af;
-      transition: all 0.3s ease;
-    }
-
-    nav a:hover {
-      background-color: #0af;
-      color: #000;
-      box-shadow: 0 0 15px #0af;
-    }
-
-    /* Icono de hamburguesa para móviles */
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
+      width: 100vw;
+      height: 100vh;
+      border-radius: 0;
       padding: 10px;
     }
-
-    .menu-toggle span {
-      background-color: #0af;
-      height: 3px;
-      margin: 5px 0;
-      width: 25px;
+    .menu-toggle {
+      display: block;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
     }
-
-    /* Estilos del menú desplegable */
-    .nav-links {
+    nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.9);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    nav.active {
       display: flex;
     }
-
-    .nav-links.active {
-      display: block;
+    nav a {
+      font-size: 24px;
+      margin: 10px 0;
     }
-
-    .nav-links a {
-      display: block;
-      padding: 10px 20px;
-    }
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-      nav {
-        position: relative;
-      }
-
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background-color: #222;
-        position: absolute;
-        top: 50px;
-        left: 0;
-        border-top: 1px solid #0af;
-      }
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      nav a {
-        margin: 0;
-        border: none;
-        text-align: center;
-      }
-    }
-
-    section {
-      margin: 40px 0;
-      padding: 20px;
-      background-color: rgba(10,175,255,0.1);
-      border: 1px solid #0af;
-      box-shadow: 0 0 20px rgba(10,175,255,0.3);
-    }
-
-    h1, h2 {
-      text-align: center;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    .button {
-      display: block;
-      width: 200px;
-      padding: 10px 20px;
-      background-color: #0af;
-      color: #000;
-      text-decoration: none;
-      text-align: center;
-      margin: 20px auto;
-      border: none;
-      cursor: pointer;
-    }
-
-    .button:hover {
-      background-color: #000;
-      color: #0af;
-      border: 1px solid #0af;
-    }
-
-    footer {
-      background-color: #111;
-      padding: 20px 0;
-      text-align: center;
-      border-top: 2px solid #0af;
-    }
-
-    .social-links a {
-      color: #0af;
-      text-decoration: none;
-      margin: 0 10px;
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover {
-      color: #fff;
-      text-shadow: 0 0 10px #0af;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
   <div class="monitor">
     <div class="screen">
       <div class="container">
         <header>
-          <h1>Token CMT</h1>
+          <h1 class="glitch">Token CMT</h1>
           <p>Impulsado por la Comunidad CryptoMinders</p>
         </header>
         
+        <button class="menu-toggle" aria-label="Menú">☰</button>
+        
         <nav>
-          <div class="menu-toggle" id="mobile-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="nav-links">
-            <a href="#intro">Introducción</a>
-            <a href="#whitepaper">Whitepaper</a>
-            <a href="#roadmap">Hoja de Ruta</a>
-            <a href="#market">Mercado</a>
-          </div>
+          <a href="#intro">Introducción</a>
+          <a href="#whitepaper">Whitepaper</a>
+          <a href="#roadmap">Hoja de Ruta</a>
+          <a href="#market">Mercado</a>
         </nav>
-
-        <!-- Secciones de la página -->
+        
         <section id="intro">
-          <h2>Introducción al Token CMT</h2>
+          <h2 class="glitch">Introducción al Token CMT</h2>
           <p>CMT es un token comunitario construido sobre Bitcoin Cash utilizando la tecnología Cashtokens. Representa la fuerza e innovación de la comunidad de YouTube CryptoMinders.</p>
         </section>
-
+        
         <section id="whitepaper">
-          <h2>Whitepaper</h2>
+          <h2 class="glitch">Whitepaper</h2>
           <p>Nuestro completo whitepaper detalla la tecnología, tokenomía y visión detrás de CMT. Próximamente en noviembre-diciembre de 2024.</p>
-          <button class="button">Leer Whitepaper</button>
+          <a href="#" class="button">Leer Whitepaper</a>
         </section>
-
+        
         <section id="roadmap">
-          <h2>Hoja de Ruta 2024-2025</h2>
+          <h2 class="glitch">Hoja de Ruta 2024-2025</h2>
           <ul>
             <li>Septiembre 2024: Acuñación del Token CMT</li>
             <li>Septiembre 2024: Listado en CauldronDEX</li>
@@ -235,15 +256,15 @@
             <li>Marzo 2025: Inicio del Programa de Creación de Mercado</li>
           </ul>
         </section>
-
+        
         <section id="market">
-          <h2>Mercado del Token CMT</h2>
+          <h2 class="glitch">Mercado del Token CMT</h2>
           <p>¿Listo para sumergirte en el ecosistema CMT? ¡Intercambia tokens CMT en CauldronDEX ahora!</p>
           <a href="https://app.cauldron.quest/swap/c40cb1d4735b32110a90e39736feaa37a9948b41780dc384541b024ad12e7aa5" class="button">Intercambiar CMT</a>
         </section>
         
         <footer>
-          <h3>Conéctate con CryptoMinders</h3>
+          <h3 class="glitch">Conéctate con CryptoMinders</h3>
           <div class="social-links">
             <a href="https://x.com/cryptomindersyt">Twitter</a>
             <a href="https://t.me/+OvqF4keZcTYwMmNh">Telegram</a>
@@ -254,14 +275,78 @@
     </div>
   </div>
 
-  <!-- Script para activar el menú responsive -->
   <script>
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navLinks = document.querySelector('.nav-links');
+    document.addEventListener('DOMContentLoaded', (event) => {
+      // Efecto de pantalla CRT
+      const crt = document.createElement('div');
+      crt.style.position = 'fixed';
+      crt.style.top = '0';
+      crt.style.left = '0';
+      crt.style.width = '100%';
+      crt.style.height = '100%';
+      crt.style.backgroundColor = 'rgba(18, 16, 16, 0.1)';
+      crt.style.opacity = '0.15';
+      crt.style.zIndex = '1000';
+      crt.style.pointerEvents = 'none';
+      document.querySelector('.screen').appendChild(crt);
 
-    mobileMenu.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+      // Efecto de glitch aleatorio y asíncrono para los títulos
+      const titles = document.querySelectorAll('h1, h2');
+      titles.forEach((title) => {
+        setInterval(() => {
+          const glitchDuration = Math.random() * 200 + 50;
+          title.style.transform = `translate(${Math.random() * 10 - 5}px, ${Math.random() * 10 - 5}px)`;
+          setTimeout(() => {
+            title.style.transform = 'translate(0, 0)';
+          }, glitchDuration);
+        }, Math.random() * 5000 + 2000);
+      });
+
+      // Efecto de escaneo
+      const scanLine = document.createElement('div');
+      scanLine.style.position = 'absolute';
+      scanLine.style.top = '0';
+      scanLine.style.left = '0';
+      scanLine.style.width = '100%';
+      scanLine.style.height = '2px';
+      scanLine.style.backgroundColor = 'rgba(10, 175, 255, 0.1)';
+      scanLine.style.zIndex = '1001';
+      scanLine.style.pointerEvents = 'none';
+      document.querySelector('.screen').appendChild(scanLine);
+
+      let scanPosition = 0;
+      setInterval(() => {
+        scanPosition += 2;
+        if (scanPosition > document.querySelector('.screen').offsetHeight) {
+          scanPosition = 0;
+        }
+        scanLine.style.top = `${scanPosition}px`;
+      }, 20);
+
+      // Menú hamburguesa para móviles
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('nav');
+
+      menuToggle.addEventListener('click', () => {
+        nav.classList.toggle('active');
+      });
+
+      // Cerrar menú al hacer clic en un enlace
+      document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('active');
+        });
+      });
+
+      // Scroll suave para los enlaces internos
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
     });
   </script>
-</body>
-</html>
+</body></html>
