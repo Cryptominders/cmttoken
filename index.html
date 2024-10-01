@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Token CMT - Comunidad CryptoMinders</title>
   <style>
-    /* Importando la fuente */
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-    /* Estilos básicos para la página */
     body {
       background-color: #333;
       color: #0af;
@@ -21,7 +19,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      scroll-behavior: smooth; /* Añade desplazamiento suave */
+      scroll-behavior: smooth;
     }
 
     .monitor {
@@ -59,6 +57,7 @@
       box-shadow: 0 0 10px #0af;
     }
 
+    /* Estilos del menú */
     nav {
       display: flex;
       justify-content: center;
@@ -79,6 +78,63 @@
       background-color: #0af;
       color: #000;
       box-shadow: 0 0 15px #0af;
+    }
+
+    /* Icono de hamburguesa para móviles */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 10px;
+    }
+
+    .menu-toggle span {
+      background-color: #0af;
+      height: 3px;
+      margin: 5px 0;
+      width: 25px;
+    }
+
+    /* Estilos del menú desplegable */
+    .nav-links {
+      display: flex;
+    }
+
+    .nav-links.active {
+      display: block;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 10px 20px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      nav {
+        position: relative;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #222;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        border-top: 1px solid #0af;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav a {
+        margin: 0;
+        border: none;
+        text-align: center;
+      }
     }
 
     section {
@@ -144,10 +200,17 @@
         </header>
         
         <nav>
-          <a href="#intro">Introducción</a>
-          <a href="#whitepaper">Whitepaper</a>
-          <a href="#roadmap">Hoja de Ruta</a>
-          <a href="#market">Mercado</a>
+          <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="nav-links">
+            <a href="#intro">Introducción</a>
+            <a href="#whitepaper">Whitepaper</a>
+            <a href="#roadmap">Hoja de Ruta</a>
+            <a href="#market">Mercado</a>
+          </div>
         </nav>
 
         <!-- Secciones de la página -->
@@ -190,6 +253,15 @@
       </div>
     </div>
   </div>
+
+  <!-- Script para activar el menú responsive -->
+  <script>
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileMenu.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
-
