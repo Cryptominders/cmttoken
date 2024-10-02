@@ -37,6 +37,7 @@
     height: 95vh;
     max-height: 800px;
     padding: 20px;
+    animation: screenFlicker 0.15s infinite;
   }
   .monitor::before, .monitor::after {
     content: "";
@@ -76,6 +77,28 @@
     z-index: 2;
     background-size: 100% 2px, 3px 100%;
     pointer-events: none;
+  }
+  .screen::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 175, 255, 0.03);
+    opacity: 0;
+    z-index: 1001;
+    pointer-events: none;
+    animation: screenGlitch 7s infinite;
+  }
+  @keyframes screenGlitch {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 0; }
+    11%, 89% { opacity: 1; transform: translate(0); }
+    20%, 80% { transform: translate(-10px, 10px); }
+    30%, 70% { transform: translate(10px, -10px); }
+    40%, 60% { transform: translate(-10px, -10px); }
+    50% { transform: translate(10px, 10px); }
   }
   .container {
     max-width: 800px;
@@ -126,15 +149,15 @@
   }
   .glitch {
     position: relative;
-    animation: glitch 2s infinite;
+    animation: heavyGlitch 2s infinite;
   }
-  @keyframes glitch {
-    0% { transform: translate(0) }
-    20% { transform: translate(-2px, 2px) }
-    40% { transform: translate(-2px, -2px) }
-    60% { transform: translate(2px, 2px) }
-    80% { transform: translate(2px, -2px) }
-    100% { transform: translate(0) }
+  @keyframes heavyGlitch {
+    0% { transform: translate(0) skew(0deg); }
+    20% { transform: translate(-5px, 5px) skew(2deg); }
+    40% { transform: translate(5px, -5px) skew(-2deg); }
+    60% { transform: translate(-5px, -5px) skew(2deg); }
+    80% { transform: translate(5px, 5px) skew(-2deg); }
+    100% { transform: translate(0) skew(0deg); }
   }
   .button {
     display: inline-block;
@@ -216,15 +239,20 @@
     }
   }
   
-  /* Estilos para los píxeles rotos */
   .broken-pixel {
     position: absolute;
-    width: 4px;
-    height: 4px;
+    width: 8px;
+    height: 8px;
     background-color: #000;
     box-shadow: 0 0 2px rgba(10,175,255,0.5);
     z-index: 1002;
     pointer-events: none;
+  }
+  
+  @keyframes screenFlicker {
+    0% { opacity: 1; }
+    50% { opacity: 0.99; }
+    100% { opacity: 1; }
   }
 </style>
 </head>
@@ -303,12 +331,12 @@
       const titles = document.querySelectorAll('h1, h2');
       titles.forEach((title) => {
         setInterval(() => {
-          const glitchDuration = Math.random() * 200 + 50;
-          title.style.transform = `translate(${Math.random() * 10 - 5}px, ${Math.random() * 10 - 5}px)`;
+          const glitchDuration = Math.random() * 500 + 100;
+          title.style.animation = `heavyGlitch ${glitchDuration}ms ease-in-out`;
           setTimeout(() => {
-            title.style.transform = 'translate(0, 0)';
+            title.style.animation = 'none';
           }, glitchDuration);
-        }, Math.random() * 5000 + 2000);
+        }, Math.random() * 10000 + 5000);
       });
 
       const scanLine = document.createElement('div');
@@ -354,7 +382,7 @@
       });
 
       const screen = document.querySelector('.screen');
-      const numBrokenPixels = 30;
+      const numBrokenPixels = 50;
 
       for (let i = 0; i < numBrokenPixels; i++) {
         const pixel = document.createElement('div');
@@ -364,10 +392,10 @@
         screen.appendChild(pixel);
 
         setInterval(() => {
-          pixel.style.opacity = Math.random() > 0.5 ? '1' : '0';
-          pixel.style.backgroundColor = Math.random() > 0.7 ? '#0af' : '#000';
-          pixel.style.boxShadow = Math.random() > 0.5 ? '0 0 4px rgba(10,175,255,0.8)' : 'none';
-        }, Math.random() * 2000 + 500);
+          pixel.style.opacity = Math.random() > 0.7 ? '1' : '0';
+          pixel.style.backgroundColor = Math.random() > 0.5 ? '#0af' : '#000';
+          pixel.style.boxShadow = Math.random() > 0.3 ? '0 0 8px rgba(10,175,255,0.8)' : 'none';
+        }, Math.random() * 1000 + 200);
       }
     });
   </script>
